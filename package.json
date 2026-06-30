@@ -1,0 +1,24 @@
+{
+  "name": "lodgify",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/rahulbokhare/lodgify#readme",
+  "bugs": {
+    "url": "https://github.com/rahulbokhare/lodgify/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulbokhare/lodgify.git"
+  },
+  "license": "ISC",
+  "author": "rahul",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.7.3"
+  }
+}
