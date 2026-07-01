@@ -2,7 +2,12 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing")
-const {data } = require("./data")
+const ejs = require("ejs");
+const path = require("path");
+
+app.set("view engine", "ejs")
+app.set("views",path.join(__dirname,"views"))
+
 
 async function main(){
     try{
@@ -15,20 +20,20 @@ async function main(){
 }};
 main();
 
-
-app.get("/home", (req ,res) => {
-    res.send("hey I'm Home")
+//index route
+app.get("/home", async(req ,res) => {
+    let listings = await Listing.find();
+    res.render("index.ejs", { listings })
 })
 
 
+//show route
 
-let firstListing = new Listing({data})
+app.get("/home/:id", async(req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    console.log(listing)
+    res.render("show.ejs", { listing })
+})
 
 
-const saveListing = () => {
-    firstListing.save();
-    console.log(Listing.collection.name);
-}
-
-
-saveListing();

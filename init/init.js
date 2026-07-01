@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {dataas} = require("./data");
+const { data } = require("./data");
 const Listing = require("../models/listing")
 
 async function connectDB (){
@@ -14,7 +14,7 @@ async function connectDB (){
 
 const initDB = async() => {
     await Listing.deleteMany();
-    await Listing.insertMany( dataas );
+    await Listing.insertMany( data );
     console.log("database was initialized");
 }
 

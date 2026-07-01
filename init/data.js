@@ -106,7 +106,6 @@ const sampleListings = [
   },
 ];
 
-module.exports = { data : sampleListings };
 
 
 const sampleListings1 = [
@@ -217,4 +216,4 @@ const sampleListings1 = [
   },
 ];
 
-module.exports = { dataa : sampleListings1 };
+module.exports = { dataa : sampleListings1, data : sampleListings };
