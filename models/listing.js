@@ -3,29 +3,13 @@ const Schema = mongoose.Schema;
 
 
 const listingSchema = new Schema ({
-    title:{
-        type: String
-    },
-    description:{
-        type: String
-    },
-    loaction:{
-        type: String
-    },
-    country:{
-        type: String
-    },
-    price:{
-        type: Number
-    },
+    title : String,
+    description : String,
+    location : String,
+    country : String,
+    price : Number,
 })
 
 const Listing = mongoose.model("Listing",listingSchema);
 module.exports = Listing;
-
-
-const newListing = new Listing({
-    title : "naman",
-})
-
-newListing.save();
+ 
