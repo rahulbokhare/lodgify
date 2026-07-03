@@ -6,10 +6,14 @@
     <title>Index route</title>
 </head>
 <body>
+    <hr>
+    <a href="/home/new">Create New Listing</a>
+    <hr>
    <ul>
      <%for(let listing of listings){ %>
         <a href="/home/<%= listing._id %>"><li><%= listing.title %></li></a>
      <% } %>
+
    </ul>
 </body>
 </html>
