@@ -6,12 +6,12 @@ const ejs = require("ejs");
 const path = require("path");
 const methodOverride = require("method-override");
 const listingRoute = require("./routes/listing")
+const ExpressError = require("./utils/ExpressError")
 
 app.set("view engine", "ejs")
 app.set("views",path.join(__dirname,"views"))
 app.use(express.urlencoded({ extended : true }))
 app.use(methodOverride("_method"))
-
 
 async function main(){
     try{
@@ -24,5 +24,15 @@ async function main(){
 }};
 main();
 
-
 app.use("/home", listingRoute);
+app.all("/*splat", (req, res, next) => {
+    next(new ExpressError(404, "Page not found"));
+});
+
+app.use((err, req, res, next)=>{
+    let { statusCode = 500 , message = "some error happened"} = err;
+    return res.render("error.ejs", { err })
+
+})
+
+

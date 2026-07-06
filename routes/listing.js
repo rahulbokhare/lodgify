@@ -2,6 +2,7 @@ const express = require("express");
 const Listing = require("../models/listing");
 const router = express.Router();
 const listingController = require("../controllers/listing");
+const ExpressError = require("../app")
 
 //Index route
 router.get("/", listingController.index);
