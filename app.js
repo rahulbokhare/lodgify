@@ -2,12 +2,23 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing")
+const User = require("./models/user")
 const ejs = require("ejs");
 const path = require("path");
 const methodOverride = require("method-override");
 const listingRoute = require("./routes/listing")
-const ExpressError = require("./utils/ExpressError")
+const userRoute = require("./routes/user")
+const ExpressError = require("./utils/ExpressError");
+const joi = require("joi");
+const wrapAsync = require("./utils/wrapAsync");
+const ejsMate = require("ejs-mate");
+const passport = require('passport');
+const passportLocal = require("passport-local");
+const session = require("express-session");
+const flash = require("connect-flash");
+const middleware = require("./middleware");
 
+app.engine("ejs", ejsMate)
 app.set("view engine", "ejs")
 app.set("views",path.join(__dirname,"views"))
 app.use(express.urlencoded({ extended : true }))
@@ -24,15 +35,38 @@ async function main(){
 }};
 main();
 
-app.use("/home", listingRoute);
-app.all("/*splat", (req, res, next) => {
-    next(new ExpressError(404, "Page not found"));
-});
+const sessionOptions = {
+    secret : "mysupersecretkey",
+    resave : false,
+    saveUninitialized : false,
+    cookie : {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+}
+app.use(session(sessionOptions));
+app.use(flash())
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new passportLocal(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-app.use((err, req, res, next)=>{
-    let { statusCode = 500 , message = "some error happened"} = err;
-    return res.render("error.ejs", { err })
-
+app.use((req, res, next) => {
+    res.locals.successMsg = req.flash("success");
+    res.locals.errorMsg = req.flash("error")
+    res.locals.currUser = req.user;
+    let currUser = req.user;
+    if(currUser){
+        let { username } = req.user;
+    res.locals.name = username;
+    }
+    next()
 })
 
+app.use("/home", listingRoute);
+app.use("/" , userRoute)
 
+
+app.use(middleware.errorHandlar);

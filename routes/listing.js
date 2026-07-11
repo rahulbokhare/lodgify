@@ -2,19 +2,21 @@ const express = require("express");
 const Listing = require("../models/listing");
 const router = express.Router();
 const listingController = require("../controllers/listing");
-const ExpressError = require("../app")
+const ExpressError = require("../utils/ExpressError");
+const middleware = require("../middleware");
+const { rulesForListing } = require("../schema")
 
 //Index route
 router.get("/", listingController.index);
 //New Route
-router.get("/new", listingController.newGet)
-router.post("/new", listingController.newPost );
+router.get("/new",middleware.isLoggedIn, listingController.newGet)
+router.post("/new", middleware.validateListing, listingController.newPost );
 //show route
 router.get("/:id", listingController.show);
 //edit route
-router.get("/:id/edit", listingController.editGet)
-router.put("/:id", listingController.editPut )
+router.get("/:id/edit",middleware.isLoggedIn, listingController.editGet)
+router.put("/:id",middleware.validateListing, listingController.editPut )
 //delete route
-router.delete("/:id", listingController.deleteRoute )
+router.delete("/:id", middleware.isLoggedIn, listingController.deleteRoute )
 
-module.exports = router;
+module.exports = router; 

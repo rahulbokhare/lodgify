@@ -1,0 +1,17 @@
+
+<body>
+    <% if(currUser) { %>
+        <h2><%= name %></h2>
+    <% } %>
+    <a href="/home">home</a>
+    <br>
+    <a href="/home/new">create new listing</a>
+    <br>
+   <% if(!currUser) { %>
+     <a href="/signup">signup</a>&nbsp;&nbsp;&nbsp;
+    <a href="/login">login</a>&nbsp;&nbsp;&nbsp;
+   <%}else {%>
+    <a href="/logout">logout</a>
+    <% } %>
+</body>
+</html>

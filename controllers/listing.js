@@ -1,15 +1,16 @@
 
 const Listing = require("../models/listing")
 const ExpressError = require("../utils/ExpressError")
-const wrapAsync = require("../utils/wrapAsync")
+const wrapAsync = require("../utils/wrapAsync");
+const middleware = require("../middleware");
 
 module.exports.index = wrapAsync(async(req, res) => {
     let listings = await Listing.find();
-    res.render("index.ejs", { listings });
+    res.render("listings/index.ejs", { listings });
 })
 
 module.exports.newGet = (req, res) => {
-    res.render("new.ejs")
+    res.render("listings/new.ejs")
 }
 
 module.exports.newPost = wrapAsync(async(req, res) => {
@@ -17,21 +18,20 @@ module.exports.newPost = wrapAsync(async(req, res) => {
     let listing = await Listing.findById(id);
     let newListing = new Listing(req.body.listing);
     await newListing.save();
-    console.log(newListing)
     res.redirect("/home");
 })
 
 module.exports.show = wrapAsync(async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
-    res.render("show.ejs",{ listing })
+    res.render("listings/show.ejs",{ listing })
 })
 
 module.exports.editGet = wrapAsync(
     async(req, res) => {
     let { id } = req.params;
     listing = await Listing.findById(id);
-    res.render("edit.ejs", { listing });
+    res.render("listings/edit.ejs", { listing });
 }
 )
 

@@ -1,0 +1,12 @@
+<% layout("layouts/boilerplate") %>
+<body>
+  
+    <hr>
+     <%= successMsg %>
+   <ul>
+     <%for(let listing of listings){ %>
+        <a href="/home/<%= listing._id %>"><li><%= listing.title %></li></a>
+     <% } %>
+
+   </ul>
+</body>
