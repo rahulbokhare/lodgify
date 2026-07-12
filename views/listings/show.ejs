@@ -12,12 +12,32 @@
         <h4><%= listing.description %></h4>
     </ul>
 
-
     <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
         <a href="/home/<%= listing._id %>/edit">edit listing</a>
         <form action="/home/<%= listing._id %>?_method=delete" method="post">
         <button>delete</button>
     </form>
+    <% } %>
+
+    <hr>
+    <br>
+
+        <h2>Review Here</h2>
+    <form action="/home/<%= listing._id %>/review" method="post">
+        <label for="review">Reveiw : </label>
+        <textarea name="review[comment]" id="review"></textarea>
+        <button>submit</button>
+    </form>
+    <hr>
+    <hr>
+
+    <% for(review of listing.reviews) { %>
+        <div class="review">
+        <%= review.author.username %>
+        <br>
+        <%= review.comment %>
+        <hr>
+        </div>
     <% } %>
 
 </body>

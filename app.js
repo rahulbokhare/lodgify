@@ -7,7 +7,9 @@ const ejs = require("ejs");
 const path = require("path");
 const methodOverride = require("method-override");
 const listingRoute = require("./routes/listing")
-const userRoute = require("./routes/user")
+const userRoute = require("./routes/user");
+const reviewRoute = require("./routes/review");
+
 const ExpressError = require("./utils/ExpressError");
 const joi = require("joi");
 const wrapAsync = require("./utils/wrapAsync");
@@ -66,7 +68,8 @@ app.use((req, res, next) => {
 })
 
 app.use("/home", listingRoute);
-app.use("/" , userRoute)
+app.use("/" , userRoute);
+app.use("/", reviewRoute);
 
 
 app.use(middleware.errorHandlar);

@@ -22,7 +22,7 @@ module.exports.newPost = wrapAsync(async(req, res) => {
 
 module.exports.show = wrapAsync(async(req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findById(id).populate("owner");
+    let listing = await Listing.findById(id).populate({path : "reviews",populate : { path : "author"}}).populate("owner")
     res.render("listings/show.ejs",{ listing })
 })
 
