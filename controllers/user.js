@@ -25,3 +25,15 @@ module.exports.postLogin = async(req, res) => {
     req.flash("success", " user logged in successfully")
    return  res.redirect("/home")
 }
+
+module.exports.logoutUser = (req, res, next) =>{
+     req.logout((err) => {
+        console.log(err);
+    
+    if(err){
+       return next(err);
+    }})
+    console.log("user logged out successsfully");
+    req.flash("success","User logged Out successfully");
+    res.redirect("/home")
+}

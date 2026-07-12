@@ -14,9 +14,9 @@ router.post("/new", middleware.validateListing, listingController.newPost );
 //show route
 router.get("/:id", listingController.show);
 //edit route
-router.get("/:id/edit",middleware.isLoggedIn, listingController.editGet)
-router.put("/:id",middleware.validateListing, listingController.editPut )
+router.get("/:id/edit",middleware.isLoggedIn,middleware.isOwner, listingController.editGet)
+router.put("/:id",middleware.validateListing,middleware.isOwner, listingController.editPut )
 //delete route
-router.delete("/:id", middleware.isLoggedIn, listingController.deleteRoute )
+router.delete("/:id", middleware.isLoggedIn,middleware.isOwner, listingController.deleteRoute )
 
 module.exports = router; 

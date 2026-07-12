@@ -8,6 +8,10 @@ const listingSchema = new Schema ({
     location : String,
     country : String,
     price : Number,
+    owner : {
+        type : Schema.Types.ObjectId,
+        ref : "User"
+    }
 })
 
 const Listing = mongoose.model("Listing",listingSchema);

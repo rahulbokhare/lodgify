@@ -1,6 +1,10 @@
 <% layout("layouts/boilerplate") %>
 <body>
+    <div class="">
+        <%= errorMsg %>
+    </div>
     <ul>
+        <h2><%= listing.owner.username %></h2>
         <h4><%= listing.title %></h4>
         <h4><%= listing.location %></h4>
         <h4><%= listing.country %></h4>
@@ -8,8 +12,12 @@
         <h4><%= listing.description %></h4>
     </ul>
 
-    <a href="/home/<%= listing._id %>/edit">edit listing</a>
-    <form action="/home/<%= listing._id %>?_method=delete" method="post">
+
+    <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+        <a href="/home/<%= listing._id %>/edit">edit listing</a>
+        <form action="/home/<%= listing._id %>?_method=delete" method="post">
         <button>delete</button>
     </form>
+    <% } %>
+
 </body>

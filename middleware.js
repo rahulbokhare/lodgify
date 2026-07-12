@@ -1,3 +1,8 @@
+const {rulesForListing} = require("./schema");
+const Listing = require("./models/listing");
+const ExpressError = require("./utils/ExpressError")
+
+
 module.exports.validateListing = (req, res, next)=>{
     let { error } = rulesForListing.validate(req.body);
     if(error){
@@ -21,4 +26,14 @@ module.exports.isLoggedIn = (req, res, next ) => {
         return res.redirect("/login")
     }
     next()
+}
+
+module.exports.isOwner = async(req, res, next) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id)
+    if(!listing.owner.equals(req.user._id)){
+        req.flash("error", " youre not owner of this listing")
+        return res.redirect(`/home/${id}`);
+    }
+    next();
 }

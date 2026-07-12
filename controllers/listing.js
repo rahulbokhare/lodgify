@@ -2,7 +2,7 @@
 const Listing = require("../models/listing")
 const ExpressError = require("../utils/ExpressError")
 const wrapAsync = require("../utils/wrapAsync");
-const middleware = require("../middleware");
+
 
 module.exports.index = wrapAsync(async(req, res) => {
     let listings = await Listing.find();
@@ -14,16 +14,15 @@ module.exports.newGet = (req, res) => {
 }
 
 module.exports.newPost = wrapAsync(async(req, res) => {
-    let {id} = req,params;
-    let listing = await Listing.findById(id);
     let newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
     await newListing.save();
     res.redirect("/home");
 })
 
 module.exports.show = wrapAsync(async(req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findById(id);
+    let listing = await Listing.findById(id).populate("owner");
     res.render("listings/show.ejs",{ listing })
 })
 
