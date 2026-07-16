@@ -1,17 +1,23 @@
 
-<body>
-    <% if(currUser) { %>
-        <h2><%= name %></h2>
-    <% } %>
-    <a href="/home">home</a>
-    <br>
-    <a href="/home/new">create new listing</a>
-    <br>
-   <% if(!currUser) { %>
-     <a href="/signup">signup</a>&nbsp;&nbsp;&nbsp;
-    <a href="/login">login</a>&nbsp;&nbsp;&nbsp;
-   <%}else {%>
-    <a href="/logout">logout</a>
-    <% } %>
-</body>
-</html>
+    <!-- <% if(currUser) { %>
+        <h2></h2>
+    <% } %> -->
+
+    <div class="nav">
+
+        <div class="nav-options">
+            <a href="/home">home</a>&nbsp;&nbsp;&nbsp;
+            <a href="/home/new">Create New Listing</a>
+        </div>
+
+        <div class="nav-auth">
+            <% if(!currUser) { %>
+                <a href="/signup">signup</a>
+                <a href="/login">login</a>&nbsp;&nbsp;&nbsp;
+            <%}else {%>
+                <a href="/profile"><%= name %></a>&nbsp;&nbsp;&nbsp;
+                <a href="/logout">logout</a>
+            <% } %>
+        </div>
+    </div>
+   

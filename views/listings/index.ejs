@@ -1,12 +1,21 @@
 <% layout("layouts/boilerplate") %>
-<body>
-  
-    <hr>
-     <%= successMsg %>
-   <ul>
-     <%for(let listing of listings){ %>
-        <a href="/home/<%= listing._id %>"><li><%= listing.title %></li></a>
-     <% } %>
+<%= successMsg %>
+<div class="container">  
+    <%for(let listing of listings){ %>
+      <a href="/home/<%= listing._id %>">
+        <div class="card">
+          <div class="card-img">
 
-   </ul>
-</body>
+          </div>
+          <div class="card-details">
+            <div class="heading">
+              <p><%= listing.title %></p>
+              <p>owned by : <%= listing.owner.username %></p>
+            </div>
+            <p><%= listing.location %></p>
+            <p><%= listing.price %></p>
+          </div>
+        </div>
+      </a>
+    <% } %>  
+</div>

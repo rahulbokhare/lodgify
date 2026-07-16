@@ -5,7 +5,7 @@ const wrapAsync = require("../utils/wrapAsync");
 
 
 module.exports.index = wrapAsync(async(req, res) => {
-    let listings = await Listing.find();
+    let listings = await Listing.find().populate("owner");
     res.render("listings/index.ejs", { listings });
 })
 
@@ -23,7 +23,11 @@ module.exports.newPost = wrapAsync(async(req, res) => {
 module.exports.show = wrapAsync(async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id).populate({path : "reviews",populate : { path : "author"}}).populate("owner")
-    res.render("listings/show.ejs",{ listing })
+    if(!listing){
+        throw new ExpressError( 404 , "Listing not found");
+    }else{
+         res.render("listings/show.ejs",{ listing })
+    }
 })
 
 module.exports.editGet = wrapAsync(

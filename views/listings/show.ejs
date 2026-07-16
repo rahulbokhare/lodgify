@@ -1,43 +1,49 @@
 <% layout("layouts/boilerplate") %>
-<body>
-    <div class="">
-        <%= errorMsg %>
+    <%= errorMsg %>
+    <div class="show">
+        <div class="show-img">
+             <img src="/image/aneetp.png" alt="">
+        </div>
+        <div class="show-details">
+            <h2 class="mt-3"><%= listing.title %></h2>
+            <p>owned by : <%= listing.owner.username %></p>
+            <p>Location : <%= listing.location %></p>
+            <p>Country : <%= listing.country %></p>
+            <p>Price : <%= listing.price %></p>
+            <p><%= listing.description %></p>
+        </div>
+
+        <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+                    <div class="col-8 offset-2 d-flex">
+                        <a href="/home/<%= listing._id %>/edit" class="btn btn-success col-1">edit </a>
+                        <form action="/home/<%= listing._id %>?_method=delete"  method="post">
+                            <button class="btn btn-danger offset-4 ">delete</button>
+                        </form>
+                    </div>
+        <% } %>
+
     </div>
-    <ul>
-        <h2><%= listing.owner.username %></h2>
-        <h4><%= listing.title %></h4>
-        <h4><%= listing.location %></h4>
-        <h4><%= listing.country %></h4>
-        <h4><%= listing.price %></h4>
-        <h4><%= listing.description %></h4>
-    </ul>
+        
 
-    <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
-        <a href="/home/<%= listing._id %>/edit">edit listing</a>
-        <form action="/home/<%= listing._id %>?_method=delete" method="post">
-        <button>delete</button>
-    </form>
-    <% } %>
-
-    <hr>
-    <br>
-
-        <h2>Review Here</h2>
-    <form action="/home/<%= listing._id %>/review" method="post">
+    
+  <div class="review-form">
+      <h2>Review Here</h2>
+     <form action="/home/<%= listing._id %>/review" method="post">
         <label for="review">Reveiw : </label>
         <textarea name="review[comment]" id="review"></textarea>
-        <button>submit</button>
+        <button class="btn btn-success">submit</button>
     </form>
-    <hr>
-    <hr>
+  </div>
 
-    <% for(review of listing.reviews) { %>
-        <div class="review">
-        <%= review.author.username %>
-        <br>
-        <%= review.comment %>
-        <hr>
+    <div class="reviews">
+        <div class="review-container">
+             <% for(review of listing.reviews) { %>
+                <div class="review">
+                    <p id="username""><%= review.author.username %></p>
+                    <p id="comment"><%= review.comment %></p>
+                </div>  
+            <% } %>   
         </div>
-    <% } %>
+        
+    </div>
 
-</body>

@@ -1,6 +1,7 @@
 const ExpressError = require("../utils/ExpressError")
 const wrapAsync = require("../utils/wrapAsync")
 const User = require("../models/user");
+const { findById } = require("../models/review");
 
 
 module.exports.getSignUp = wrapAsync(async(req, res) =>{
@@ -36,4 +37,12 @@ module.exports.logoutUser = (req, res, next) =>{
     console.log("user logged out successsfully");
     req.flash("success","User logged Out successfully");
     res.redirect("/home")
+}
+
+
+module.exports.profileRoute = async(req, res) => {
+    console.log(req.user._id)
+    let user = await User.findById(req.user._id);
+    console.log(user)
+    res.render("user/profile.ejs",{ user })
 }
