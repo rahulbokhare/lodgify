@@ -9,16 +9,24 @@ const listingSchema = new Schema ({
     location : String,
     country : String,
     price : Number,
+    image : {
+        url : {
+            type : String,
+            default : "https://res.cloudinary.com/dnmly4mkv/image/upload/v1786736649/lodgify_DEV/xngqlgqoafqur8utycyg.jpg"
+        },
+        filename : {
+            type : String,
+            default : "defaultListingImage"
+        }
+    },
     owner : {
         type : Schema.Types.ObjectId,
         ref : "User"
     },
-    reviews : [
-        {
+    reviews : [{
         type : Schema.Types.ObjectId,
         ref : "Review"
-    }
-    ]
+    }]
 })
 
 listingSchema.post("findOneAndDelete", async(listing) => {

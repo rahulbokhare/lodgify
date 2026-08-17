@@ -9,14 +9,22 @@ module.exports.index = wrapAsync(async(req, res) => {
     res.render("listings/index.ejs", { listings });
 })
 
+//New Listing
 module.exports.newGet = (req, res) => {
     res.render("listings/new.ejs")
 }
-
-module.exports.newPost = wrapAsync(async(req, res) => {
+module.exports.newPost =  wrapAsync(async(req, res) => {
+    
     let newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
+    if(req.file){
+        newListing.image = {
+            url : req.file.path,
+            filename : req.file.filename
+        }
+    }
     await newListing.save();
+    console.log(req.file)
     res.redirect("/home");
 })
 
@@ -30,8 +38,7 @@ module.exports.show = wrapAsync(async(req, res) => {
     }
 })
 
-module.exports.editGet = wrapAsync(
-    async(req, res) => {
+module.exports.editGet = wrapAsync(async(req, res) => {
     let { id } = req.params;
     listing = await Listing.findById(id);
     res.render("listings/edit.ejs", { listing });
@@ -41,6 +48,13 @@ module.exports.editGet = wrapAsync(
 module.exports.editPut = wrapAsync(async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findByIdAndUpdate(id, req.body.listing);
+    if(req.file){
+        listing.image = {
+            url : req.file.path,
+            filename : req.file.filename
+        }
+        await listing.save();
+    }
     console.log(listing);
     res.redirect(`/home/${id}`)
 })

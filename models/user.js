@@ -8,7 +8,17 @@ const userSchema= new Schema({
         type : String,
         required : true,
         unique : true
-    }
+    },
+    profilePic : {
+        url : {
+            type : String,
+            default : "https://res.cloudinary.com/dnmly4mkv/image/upload/v1786737073/lodgify_DEV/myed1ofiyszuzwudi9vo.jpg"
+        },
+        filename : {
+            type : String,
+            default : "defaultUser"
+        }
+    },
 })
 userSchema.plugin(passportLocalMongoose)
 

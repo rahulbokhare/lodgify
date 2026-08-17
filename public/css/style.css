@@ -35,7 +35,7 @@ body{
     width: 100%;
     border-radius: 6px 6px 0 0 ;
     overflow: hidden;
-    background-image: url("/image/aneetp.png");
+
     background-size: cover;
     background-position: center;
 }
@@ -169,4 +169,16 @@ body{
 #comment{
     font-size: medium;
     font-weight: 400;
+}
+
+.profilePic{    
+    height: 100px;
+    width: 100px;
+    border-radius: 1rem;
+}
+.profilePic img{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1rem;
 }

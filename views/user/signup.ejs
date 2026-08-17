@@ -15,11 +15,11 @@
    <div class="row">
      <div class="col-4 offset-4 ">
         <h3 class="mt-5">Signup</h3>
-        <form action="/signup" novalidate class="needs-validation" method="post">
+        <form action="/signup" novalidate class="needs-validation" enctype="multipart/form-data" method="post">
 
         <div class="row mt-4">
              <label for="username" class="form-label">Enter Username </label>
-             <input type="text" class="form-control" name="username" id="username" required>
+             <input type="text" class="form-control" name="user[username]" id="username" required>
              <div class="invalid-feedback">please enter username to continue</div>
         </div>
 
@@ -31,13 +31,25 @@
 
         <div class="row">
             <label for="pass" class="form-label">Enter Password </label>
-            <input type="password" class="form-control" name="password" id="pass" required>
+            <input type="password" class="form-control" name="user[password]" id="pass" required>
             <div class="invalid-feedback">please enter password to continue</div>
         </div>
 
-        <button class="btn btn-success col-2 offset-4 mt-4">signup</button>
+        <div class="row">
+                <p class="form-label">upload profile pic</p>
+                <input type="file" name="user[profilePic]">
+        </div>
+
+        <div class="row">
+            <button class="btn btn-success col-2 offset-4 mt-4">signup</button>
+            <a class="btn btn-success col-2 offset-4 mt-4" href="/login">login</a>
+        </div>
+
+        
+        
 
       </form>
+  
     </div>
    </div>
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <h3>sample for image upload</h3>
+
+
+
+    <% if(demoImage){ %>
+        <div class="" style="height: 10rem; width: 10rem; border: 1px solid black; border-radius: 1rem; margin: 2rem;">
+        <img style="height: 100%; width: 100%; overflow: hidden; border-radius: 1rem; " src="<%= demoImage.image.url %>" alt="" >
+    </div>
+    <% } %>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+
+        <div class="row">
+
+            <div class="col-4">
+                <label for="name">Enter demo name</label>
+                <input type="text" id="name" name="demo[name]">
+            </div>
+
+            <div class="col-4">
+                <input type="file" name="demo[image]"> 
+            </div>
+
+            <button>upload</button>
+
+        </div>
+
+    </form>
+</body>
+</html>

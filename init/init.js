@@ -1,31 +1,38 @@
 const mongoose = require("mongoose");
-const { data } = require("./data");
+const { sampleListings } = require("./data");
 const Listing = require("../models/listing");
 const User = require("../models/user");
+const Review = require("../models/review");
+const sampleListing = require("./sampleUsers");
 
 const initDB = async() => {
-    await Listing.deleteMany();
-    const user = await User.find();
-    for(let listing of data){
-      const randomUser = user[Math.floor(Math.random()* user.length)];
-      listing.owner = randomUser._id;
-      console.log(listing)
+    const users = await User.find();
+
+    for(let listing of sampleListings){
+        const newListing = new Listing({
+            title : listing.title,
+            description : listing.description,
+            location : listing.location,
+            country : listing.country,
+            price : listing.price
+        });
+
+        let randomIdx = Math.floor(Math.random()  * users.length);
+        newListing.owner =  users[randomIdx]._id;
+        await newListing.save()
+        console.log("added sample listings")
     }
-    await Listing.insertMany(data);
-    console.log("database was initialized");
 }
 
 async function connectDB (){
    try{
      await mongoose.connect('mongodb://127.0.0.1:27017/lodgifyDB')
      console.log("connected to database")
-     initDB();
+     await initDB();
    }catch (e){
     console.log(e)
    }
 };
-
-
 
 connectDB();
 

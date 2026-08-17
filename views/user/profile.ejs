@@ -1,8 +1,10 @@
 <%- layout("/layouts/boilerplate") %>
  
-
 <div class="profile row">
     <div class="profile-card">
+    <div class="profilePic offset-2 mt-3">
+        <img src="<%= user.profilePic.url %>" alt="">
+    </div>
 
     <div class="col-8 offset-2 mt-4">
         <h3><%= user.username %></h3>
@@ -11,4 +13,11 @@
         <p><%= user.email %></p>
     </div>
     </div>
+    <div class="row offset-2">
+        <div class="col">
+            <a class="btn btn-success" href="editProfile">Edit details</a>
+        </div>
+    </div>
+
+  
 </div>

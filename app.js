@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV != "production"){
+    require("dotenv").config();
+}
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -18,6 +21,13 @@ const passportLocal = require("passport-local");
 const session = require("express-session");
 const flash = require("connect-flash");
 const middleware = require("./middleware");
+const multer  = require('multer');
+const crypto = require("crypto");
+
+const Demo = require('./models/demo');
+const {storage} = require("./utils/cloudConfig");
+const upload = multer({ storage });
+
 
 app.engine("ejs", ejsMate)
 app.set("view engine", "ejs")
@@ -48,12 +58,24 @@ const sessionOptions = {
     }
 }
 app.use(session(sessionOptions));
-app.use(flash())
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new passportLocal(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id);
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
+});
+
+
+
 
 app.use((req, res, next) => {
     res.locals.successMsg = req.flash("success");
@@ -66,6 +88,25 @@ app.use((req, res, next) => {
     }
     next()
 })
+
+
+
+
+app.get("/upload" ,async(req, res) => {
+    let demoImage = await Demo.findOne();
+    res.render("upload.ejs", { demoImage });
+})
+
+app.post("/upload", upload.single("demo[image]"), async(req, res) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    let newDemo = new Demo(req.body.demo);
+    newDemo.image = { url , filename};
+    await newDemo.save();
+    console.log(newDemo);;
+    res.redirect("/upload")
+})
+
 
 app.use("/home", listingRoute);
 app.use("/" , userRoute);

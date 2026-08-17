@@ -1,0 +1,37 @@
+<%- layout("/layouts/boilerplate") %>
+
+
+<h3>Edit profile details here</h3>
+  <form action="/editProfile?_method=put" novalidate class="needs-validation" enctype="multipart/form-data" method="post">
+
+
+        <div class="row offset-2">
+            <div class="mt-3" style="height: 10rem; width: 12rem;">
+            <img style="height: 100%; width: 100%; overflow: hidden; border-radius: 1rem; " src="<%= user.profilePic.url %>" alt="">
+        </div>
+        <div class="row">
+                <p class="form-label">change profile pic</p>
+                <input type="file" name="user[profilePic]" >
+        </div>
+
+        <div class="row mt-4">
+             <label for="username" class="form-label">Change Username </label>
+             <input type="text" class="form-control" name="user[username]" id="username" value="<%= user.username %>" >
+             <div class="invalid-feedback">please enter username to continue</div>
+        </div>
+
+        <div class="row">
+            <label for="email" class="form-label" >change email  </label>
+            <input type="text" name="user[email]" class="form-control" id="email" value="<%= user.email %>" >
+
+        </div>
+
+        
+
+            <button class="btn btn-success col-2 offset-4 mt-4">make changes</button>
+
+        
+        </div>
+        
+
+      </form>
