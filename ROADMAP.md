@@ -15,7 +15,7 @@
 - [ ] Categories
 
 ## User
-- [ ] Edit profile
+- [ .] Edit profile
 - [ ] Change password
 - [ ] Forgot password
 
